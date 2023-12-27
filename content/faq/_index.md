@@ -31,7 +31,7 @@ draft: false
 
 <div class="white-text">
     <h3>Which device is the best to give Droidian a try?</h3>
-    <p>Have a look at the list of <a href="https://devices.droidian.org/devices/">officially supported devices</a>.</p>
+    <p>Havea look at the list of <a href="https://devices.droidian.org/devices/">officially supported devices</a>. these devices perform the best amongst all other and they are maintained by Droidian's core dev team</p>
 </div>
 <br><br>
 
@@ -43,7 +43,7 @@ draft: false
 
 <div class="white-text">
     <h3>My device is not listed at devices.droidian.org. What should I do now?</h3>
-    <p>You can follow the porting guide available <a href="https://github.com/droidian/porting-guide">here</a>.</p>
+    <p>You can follow the porting guide available <a href="https://docs.droidian.org/porting-guide">here</a>.</p>
 </div>
 <br><br>
 
@@ -54,14 +54,14 @@ draft: false
 <br><br>
 
 <div class="white-text">
-    <h3>Why does Droidian use the Android kernel? Why not mainline Linux kernel?</h3>
+    <h3>Why does Droidian use the Android kernel? Why not utilize the mainline Linux kernel?</h3>
     <p>We rely on the Android Linux kernel and drivers to make all of the functionality provided by Android drivers work.</p>
 </div>
 <br><br>
 
 <div class="white-text">
     <h3>Can I run Android applications in Droidian?</h3>
-    <p>Yes, Waydroid can provide a pretty much complete Android experience.
+    <p>Yes, Waydroid can provide a pretty much complete Android experience. You can read more about Waydroid <a href="https://docs.droidian.org/info/android-apps/">here</a></p>
 </div>
 <br><br>
 
@@ -79,13 +79,13 @@ draft: false
 
 <div class="white-text">
     <h3>How to resize the rootfs?</h3>
-    <p>Resizing is only needed for new ports. For instructions, refer to the <a href="https://github.com/droidian/droidian/wiki/Some-useful-tips-and-scripts#how-to-resize-the-rootfs">link</a>.</p>
+    <p>Resizing is only required for new ports. For instructions, refer to this <a href="https://docs.droidian.org/info/rootfs/">link</a>.</p>
 </div>
 <br><br>
 
 <div class="white-text">
     <h3>How to connect via SSH?</h3>
-    <p>For instructions, refer to the <a href="https://github.com/droidian/droidian/wiki/Some-useful-tips-and-scripts#how-to-connect-via-ssh">link</a>.</p>
+    <p>For instructions, refer to this <a href="https://docs.droidian.org/info/ssh/">link</a>.</p>
 </div>
 <br><br>
 

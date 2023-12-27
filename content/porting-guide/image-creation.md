@@ -4,9 +4,8 @@ date: 2023-12-26T14:44:09-0500
 draft: false
 ---
 
-Image creation
-==============
-
+Summary
+-------
 * Devices released before the treble/GSI move require a system image to be built because the default image will not provide the required libraries to the system.
 
 * This guide should only be used for legacy devices (devices released without a vendor partition) which have an Android 9 port (device tree, vendor tree and kernel source).

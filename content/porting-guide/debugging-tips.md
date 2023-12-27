@@ -4,11 +4,6 @@ date: 2023-12-26T14:44:09-0500
 draft: false
 ---
 
-Debugging tips
-==============
-
-A set of tips and fixes that might help you debug the issues of your port of Droidian.
-
 Table of contents
 -----------------
 

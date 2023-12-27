@@ -1,11 +1,11 @@
 ---
-title: Kernel compilation
+title: "Kernel compilation"
 date: 2023-12-26T14:44:09-0500
 draft: false
 ---
 
-Kernel compilation
-==================
+Summary
+=======
 
 The stock Android kernel is unfortunately not enough to be able to run Droidian.
 

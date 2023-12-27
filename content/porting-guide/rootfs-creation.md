@@ -4,11 +4,6 @@ date: 2023-12-26T14:44:09-0500
 draft: false
 ---
 
-Rootfs creation
-===============
-
-To make the installation easier and more consistent we build device specific rootfs images.
-
 Table of contents
 -----------------
 

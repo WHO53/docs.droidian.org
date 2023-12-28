@@ -29,11 +29,11 @@ Table of contents
 Summary
 -------
 
-Halium based operating systems use Android drivers to make use of the systems hardware. doing so can make the process of porting a lot faster and smoother.
+Halium based operating systems use Android drivers to make use of the systems hardware. Doing so can make the process of porting a lot faster and smoother.
 
-To do so it uses an Android container running a very trimmed down version of Android in the background. Then uses middleware and various patches to system software to make use of those loaded drivers.
+To do so, it uses an Android container running a very trimmed down version of Android in the background, then uses middleware and various patches to system software to make use of those loaded drivers.
 
-on GSI systems a system image which makes use of the vendor partition for system firmware can be used. but on older devices without a vendor partition (non-Treble), a system image has to be built from scratch.
+On GSI systems, a system image, which makes use of the vendor partition for system firmware, can be used. On older devices without a vendor partition (pre-Treble), a device-specific system image has to be built.
 
 Currently this method only works on devices with Android 9 (halium-9.0). As an example a device released with Android 7 but with Android 9 ported to the device.
 
@@ -49,15 +49,15 @@ Build environment
 
 Before we start, It should be noted that the Android build system will be well over 50GB when building and is about 35GB on start without any modifications. So make sure you have enough storage before starting the process.
 
-First create a directory for the Halium/Android build system
+First create a directory for the Halium/Android build system:
 
 	(host)$ mkdir droidian && cd droidian
 
-and initialize the correct manifest file for your Halium version (in this case it will he halium-9.0)
+Then initialize the correct manifest file for your Halium version (in this case it will he halium-9.0):
 
 	(host)$ repo init -u https://github.com/Halium/android -b halium-9.0 --depth=1
 
-Now you are ready to clone into all the repositories and download the source code for the required repositories. (This will take some time)
+Now you are ready to clone into all the repositories and download the source code for the required repositories (This will take some time):
 
 	(host)$ repo sync -c
 
@@ -72,9 +72,9 @@ After downloading all the sources you'll need to write a manifest file for your 
 A manifest file is a file in which the location to all your sources on the internet and the location of all your sources on your local disk is stored.
 
 Manifest files are stored in halium/devices/manifests and the file name has the format `vendor_device.xml` in which device is the codename of your device
-As an example for Xiaomi Redmi Note 7 it will be `xiaomi_lavender.xml`
+As an example, for Xiaomi Redmi Note 7 it will be `xiaomi_lavender.xml`
 
-Your manifest file should have this as the starter code and everything should be appended
+Your manifest file should have this as the starter code and everything should be added in between the `<manifest>` and `</manifest>` tags:
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -85,7 +85,7 @@ Your manifest file should have this as the starter code and everything should be
 
 ### Remotes
 
-Remotes can be created to mark which git instance each project should be cloned from. as an example
+Remotes can be created to mark which git instance each project should be cloned from. For example:
 
 `<remote name="github" fetch="https://github.com/" revision="halium-9.0" />`
 
@@ -110,37 +110,37 @@ After adding all the entries for your device (kernel, device, vendor and possibl
 
 ### Remove project
 
-remove-project entires are used to remove a directory or file in the build system. as an example
+remove-project entires are used to remove a directory or file in the build system. For example:
 
 `<remove-project name="hybris-patches" />`
 
-This line removes hybris-patches directory. It can then be replaced by another project
+This line removes hybris-patches directory. It can then be replaced by another project:
 
 `<project path="hybris-patches" name="Halium/hybris-patches" revision="halium-9.0-arm32" />`
 
-On this example it is replaced by an arm32 version of hybris patches needed for devices with a 32 bit CPU as the default hybris-patches is arm64.
+In this example, it is replaced by an arm32 version of hybris patches needed for devices with a 32 bit CPU, as the default hybris-patches is arm64.
 
 Initializing the build environment
 ----------------------------------
 
-After completing your manifest file you can use the setup script to set your device as the target for building.
+After completing your manifest file, you can use the setup script to set your device as the target for building.
 
-Make sure to run these commands at the root of your droidian directory
+Make sure to run these commands at the root of your droidian directory:
 
 	(host)$ halium/devices/setup CODENAME
 
-replace CODENAME with your codename
+Replace CODENAME with your device's codename.
 
-Then apply the hybris patches for the build system
+Then apply the hybris patches for the build system:
 
 	(host)$ hybris-patches/apply-patches.sh --mb
 
-Now all we have to do to have a ready to build environment is to set the set up the environment variables
+Now all we need to do in order to have a ready build environment, is to set up the environment variables:
 
 	(host)$ source build/envsetup.sh
 	(host)$ breakfast CODENAME
 
-replace CODENAME with your codename
+Replace CODENAME with your device's codename.
 
 Device tree modifications
 -------------------------
@@ -149,7 +149,7 @@ For Halium 9, we need the system image to be built as system-as-root
 
 `BOARD_BUILD_SYSTEM_ROOT_IMAGE := true`
 
-As this change makes the android root read-only, we may have to ship mount points for some important partitions like firmware, persist with the system image, for this we can use the line
+As this change makes the android root read-only, we may have to ship mount points for some important partitions, such as `firmware`, `dsp` and `persist` with the system image. For this, we can use the following:
 
 ```
 BOARD_ROOT_EXTRA_FOLDERS := \
@@ -158,14 +158,14 @@ BOARD_ROOT_EXTRA_FOLDERS := \
  /persist
 ```
 
-You may need to add more mount points depending on your device. After successful boot do `ls -la /` and add folders corresponding to broken symlinks.
+You may need to add more mount points depending on your device. After successful boot do `ls -la /` and add directories corresponding to broken symlinks.
 
 You may also need to comment out java (jar) libraries and executables from building as we don't need those in our environment.
 
 Compiling
 ---------
 
-To build the system image
+To build the system image:
 
 	(host)$ mka e2fsdroid
 	(host)$ mka systemimage
@@ -173,49 +173,49 @@ To build the system image
 Obtaining the image
 -------------------
 
-If everything went smoothly without any errors, you should be able to find all the images in `out/target/product/CODENAME` where CODENAME is your codename.
+If everything went smoothly and without any errors, you should be able to find all the images in `out/target/product/CODENAME` where CODENAME is your device's codename.
 You should see `system.img`.
 
-We won't be using the `halium-boot.img` created here but the kernel compilation guide should be used for building a proper boot image.
+We won't be using the `halium-boot.img` created here and the kernel compilation guide should be used for building a proper boot image instead.
 
 Testing out the system image
 ----------------------------
 
-To test this image in Droidian, it should first be converted from a sparse image to a raw image
+To test this image in Droidian, it should first be converted from a sparse image to a raw image:
 
 	(host)$ simg2img system.img system-raw.img
 
 Now it can safely be moved to our Droidian installation.
 
-Assuming device is already booted into Droidian, scp can be used to move the image.
+Assuming device is already booted into Droidian, scp can be used to move the image:
 
 	(host)$ scp system-raw.img droidian@10.15.19.82:~/
 
-Now ssh into your device
+Now ssh into your device:
 
 	(host)$ ssh droidian@10.15.19.82
 
-And move the image to `/var/lib/lxc/android/`
+And move the image to `/var/lib/lxc/android/`:
 
 	(device)$ sudo cp system-raw.img /var/lib/lxc/android/android-rootfs.img
 
-If device is not booted up yet, rootfs can be modified from recovery by mounting it (`/data/rootfs.img`) and copying the image
+If device is not booted up yet, the rootfs can be modified from recovery by mounting it (`/data/rootfs.img`) and copying the image:
 
 	(host)$ adb push system-raw.img /data/
 
-Now from recovery shell
+Now from recovery shell (use `adb shell` to access the recovery shell):
 
 	(recovery)$ mkdir /tmp/mpoint
 	(recovery)$ mount /data/rootfs.img /tmp/mpoint
 	(recovery)$ cp /data/system-raw.img /tmp/mpoint/var/lib/lxc/android/android-rootfs.img
 
-After the system image is tested and confirmed working then you can move on to [Creating a rootfs](./rootfs-creation.md)
+After the system image is tested and confirmed working then you can move on to [Creating a rootfs](./rootfs-creation.md).
 
 Packaging up the system image
 -----------------------------
 
-You'll have to package your system image to use later on when building your rootfs in [Rootfs creation](./rootfs-creation)
+You'll have to package your system image for use later on, when building your rootfs in [Rootfs creation](./rootfs-creation).
 
-The main note here is that when building your debian package with your system image, it should have `android-system-gsi-28` as a conflicting package.
+The main note here is, that when building your debian package with your system image, it should have `android-system-gsi-28` as a conflicting package.
 
 You should also make sure to move the the system image to `/var/lib/lxc/android/android-rootfs.img` upon installation.

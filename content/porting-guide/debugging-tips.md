@@ -8,7 +8,7 @@ Table of contents
 -----------------
 
 * [Summary](#summary)
-* [Pre boot tips](#pre-boot-tips)
+* [Pre-boot tips](#pre-boot-tips)
 * [Tips for when the systen is booted with shell](#tips-for-when-the-systen-is-booted-with-shell)
 * [Tips for when the system is up with Phosh](#tips-for-when-the-system-is-up-with-phosh)
 
@@ -16,12 +16,12 @@ Summary
 -------
 
 When porting a new device, you might (will) encounter some issues.
-It's unlikely that everything will work fine at first boot, so strap in,
+It's unlikely that everything will work fine the first time you boot, so strap in,
 read this document twice and enjoy your ride.
 
-Note that that this document assumes TWRP as the recovery used.
+Note that that this document assumes TWRP is the recovery used.
 
-Pre boot tips
+Pre-boot tips
 -------------
 
 These things are worth checking first:
@@ -29,14 +29,14 @@ These things are worth checking first:
 ### Check size of the Droidian rootfs
 
 Some recoveries might fail in resizing the Droidian rootfs. This will in turn
-break the boot process (and eventual feature bundles installation) due to the
+break the boot process (and eventual feature bundle's installation) due to the
 lack of available free space.
 
 You can open a shell from your recovery (either via `adb shell` or with the built-in terminal) and check:
 
 	(recovery)$ ls -lth /data/rootfs.img
 
-if the image size is not 8GB, you can attempt resizing it manually:
+If the image size is not 8GB, you can attempt resizing it manually:
 
 	(recovery)$ e2fsck -fy /data/rootfs.img
 	(recovery)$ resize2fs -f /data/rootfs.img 8G
@@ -64,7 +64,7 @@ rootfs. Thus, if you have the `systempart=` kernel option, remove it and recompi
 your kernel (or otherwise remove it from the bootimage using tools like yabit or
 Android Image Kitchen).
 
-If your device reboots immediately, you should try the these few systemd sections
+If your device reboots immediately, you should try these few troubleshooting options:
 
 ### Booting to fastboot
 
@@ -106,9 +106,9 @@ If you haven't masked journald, and have devtools (or a nightly image) installed
 	(recovery)$ export PATH=/usr/bin:/usr/sbin
 	(recovery)$ journalctl --no-pager
 
-If you are stuck at the glowing Droidian logo and RNDIS is not working, you should into your kernel config to make sure `CONFIG_USB_CONFIGFS_RNDIS` is enabled.
+If you are stuck at the glowing Droidian logo and RNDIS is not working, you should check your kernel config to make sure `CONFIG_USB_CONFIGFS_RNDIS` is enabled.
 
-It should also be noted that you should check the pstore section of the [kernel compilation](./kernel-compilation.md) guide.
+It should also be noted, that you should check the pstore section of the [kernel compilation](./kernel-compilation.md) guide.
 
 If you have devtools installed (or have flashed a nightly image) but still don't have working RNDIS, these tips might help you:
 
@@ -193,11 +193,11 @@ To make ssh ignore systemd complaining, [this service file](https://github.com/d
 	(recovery)$ export PATH=/usr/bin:/usr/sbin
 	(recovery)$ nano /etc/systemd/system
 
-Put the content of the service file
+Enter the content of the previously mentioned service file
 
 	(recovery)$ systemctl enable ssh-fix
 
-Tips for when the systen is booted with shell
+Tips for when the system is booted with a shell
 ---------------------------------------------
 
 **Before proceeding, read the previous section, those tips might be useful as well.**
@@ -227,7 +227,7 @@ Then run the following on your device
 
 The ip address `10.15.19.100` is your host. Double check it before running the command.
 
-Now to access the internet replace the content of `/etc/resolv.conf` with `nameserver 8.8.8.8`.
+Now to access the internet, replace the contents of `/etc/resolv.conf` with `nameserver 8.8.8.8`.
 
 ### Umount schedtune
 
@@ -252,11 +252,11 @@ You can use
 
 	(device)# lxc-ls --fancy
 
-to check if the Halium container is running
+to check if the Halium container is running.
 
 ### Launch the Halium container manually
 
-If the Halium container is not running, you might try launching it manually:
+If the Halium container is not running, you could try launching it manually:
 
 	(device)# lxc-start -n android --logfile=/tmp/lxclog --logpriority=DEBUG
 
@@ -264,7 +264,7 @@ then check `/tmp/lxclog`.
 
 ### Re-generate udev rules
 
-If the container is running, but you still haven't booted up to UI, you might try regenerating the udev rules
+If the container is running, but you still haven't booted up to UI, you might need to try regenerating the udev rules:
 
 	(device)# DEVICE=codename # replace with your device codename
 	(device)# cat /var/lib/lxc/android/rootfs/ueventd*.rc /var/lib/lxc/android/rootfs/system/etc/ueventd*.rc /vendor/ueventd*.rc | grep ^/dev | sed -e 's/^\/dev\///' | awk '{printf "ACTION==\"add\", KERNEL==\"%s\", OWNER=\"%s\", GROUP=\"%s\", MODE=\"%s\"\n",$1,$3,$4,$2}' | sed -e 's/\r//' >/etc/udev/rules.d/70-$DEVICE.rules
@@ -277,13 +277,13 @@ Trying the `test_hwcomposer` command might be an useful test to check if the And
 
 Note that on Halium 10/11 devices you might need to restart the Android composer service after
 using a client like test_hwcomposer or phoc itself. You can kill the `android.service.composer` process, it will be
-respawned by the android init automatically.
+respawned by the Android init automatically.
 
 ### Make the Phosh service wait some seconds before start-up
 
 Sometimes Phosh might attempt its startup even when the Android composer service is not ready (even if it signals so itself).
 
-This is a bug, and you can workaround that by making the phosh service (which starts the compositor) wait some seconds:
+This is a bug and you can workaround that by making phosh.service (which starts the compositor) wait some seconds before starting:
 
 	(device)# mkdir -p /etc/systemd/system/phosh.service.d/
 	(device)# nano /etc/systemd/system/phosh.service.d/90-wait.conf
@@ -300,13 +300,13 @@ Save and reboot.
 
 ### Vendor is not mounted
 
-It is possible that the vendor partition doesn't get mounted by init and as a result the Halium contianer cannot start much of the services.
+It is possible that the vendor partition doesn't get mounted by init and as a result the Halium container cannot start much of the services.
 
-First off check if the vendor image is mounted
+First off check if the vendor partition is mounted:
 
 	(device)# ls /vendor
 
-If it's empty then it is not mounted by init. Try mounting it manually by finding the partition in `/dev/disk/by-partlabel` and `/dev/block/bootdevice/by-name`.
+If it is empty, it wasn't mounted by init. Try mounting it manually by finding the partition in `/dev/disk/by-partlabel` and `/dev/block/bootdevice/by-name`.
 
 If it is not there then you'll need to search `/dev` for your vendor partition.
 
@@ -318,15 +318,16 @@ mount /dev/mmcblk0pYOURVENDOR /vendor
 mount --bind /vendor /var/lib/lxc/android/rootfs/vendor
 ```
 
-And reboot
+After that, reboot.
 
-Make sure to come back to this issue later to find a proper solution.
+Make sure to look at this issue again later and try to find a proper solution.
 
 ### lxc@android and phosh started but no output
 
-If phosh and lxc@android have started with udev rules in plcae but there is no output on the screen, it is possible that vndservicemanager is crashing.
+If phosh and lxc@android have started with udev rules in place, but there is no output on the screen, it is possible that vndservicemanager is crashing.
 
-On some Halium 10 devices, a patched version of vndservicemanager might be used to have vndservicemanager start. a patched version of vndservicemanager can be found [here](https://github.com/droidian-devices/adaptation-droidian-starqlte/blob/droidian/usr/lib/droid-vendor-overlay/bin/vndservicemanager).
+On some Halium 10 devices, a patched version of vndservicemanager might need to be used to have vndservicemanager start.
+A patched version of vndservicemanager can be found [here](https://github.com/droidian-devices/adaptation-droidian-starqlte/blob/droidian/usr/lib/droid-vendor-overlay/bin/vndservicemanager):
 
 	(device)# mkdir -p /usr/lib/droid-vendor-overlay/bin/
 	(device)# cp vndservicemanager /usr/lib/droid-vendor-overlay/bin/
@@ -335,11 +336,11 @@ Reboot
 
 ### Long boot times
 
-If you are encountering long boot times, you can try inspecting kernel logs and check what process was keeping the system from booting up
+If you are encountering long boot times, you can try inspecting kernel logs and check what process was keeping the system from booting up:
 
 	(device)# dmesg
 
-To figure out which part of the boot process is causing the issue
+To figure out which part of the boot process is causing the issue:
 
 	(device)# systemd-analyze
 
@@ -348,9 +349,13 @@ Tips for when the system is up with Phosh
 
 ### Screen brightness
 
-On some Qualcomm devices, screen brightness is always set to 0 on boot via hwcomposer. to work around this issue brightness can be set to maximum on each boot
+On some Qualcomm devices, screen brightness is always set to 0 on boot via hwcomposer. To work around this issue, brightness can be set to the maximum on each boot:
 
 	(device)$ echo 2047 > /sys/class/leds/lcd-backlight/brightness
+
+To find out the maximum brightness value for your screen, run this command:
+
+	(device)$ cat > /sys/class/leds/lcd-backlight/max_brightness
 
 It can also be set as a service to start at boot like [this service file](https://github.com/droidian-devices/adaptation-droidian-lavender/blob/droidian/debian/adaptation-lavender-configs.brightness.service).
 
@@ -358,104 +363,104 @@ It can also be set as a service to start at boot like [this service file](https:
 
 On some devices, vendor sets the wrong permission for the brightness sysfs node at boot so Phosh cannot access and modify it.
 
-A service like [this](https://github.com/droidian-devices/adaptation-droidian-onclite/blob/droidian/debian/adaptation-onclite-configs.brightnessperm.service) can be used to set the correct permission or at least give the user droidian access to the sysfs node
+A service like [this](https://github.com/droidian-devices/adaptation-droidian-onclite/blob/droidian/debian/adaptation-onclite-configs.brightnessperm.service) can be used to set the correct permission or at least give the `droidian` user access to the sysfs node.
 
 Make sure to replace the brightness node according to your needs.
 
 ### Phosh scaling
 
-Phosh might have the wrong scaling set. phoc.ini should be created to adjust it
+Phosh might have the wrong scaling set. A file named `phoc.ini` should be created to adjust it:
 
 	(device)# mkdir -p /etc/phosh/
-	(device)# nano phoc.ini
+	(device)# nano /etc/phosh/phoc.ini
 
-and put [phoc.ini](https://github.com/droidian-devices/adaptation-droidian-miatoll/blob/droidian/etc/phosh/phoc.ini)
+and enter the contents of [phoc.ini](https://github.com/droidian-devices/adaptation-droidian-miatoll/blob/droidian/etc/phosh/phoc.ini) there.
 
-the value for `output:HWCOMPOSER-1` can be adjusted as needed.
+The value for `output:HWCOMPOSER-1` can be adjusted as needed.
 
 ### vendor parititon overlay
 
-To overlay a file over the vendor partition, `droid-vendor-overlay` directory can be used
+To overlay a file over the vendor partition, the `droid-vendor-overlay` directory can be used:
 
 	(device)# mkdir -p /usr/lib/droid-vendor-overlay
 
-and the your files can be added here. take [this](https://github.com/droidian-devices/adaptation-fxtec-pro1x/tree/bookworm/sparse/usr/lib/droid-vendor-overlay) as a reference.
+Your files can be added here. Use [this](https://github.com/droidian-devices/adaptation-fxtec-pro1x/tree/bookworm/sparse/usr/lib/droid-vendor-overlay) as a reference.
 
-It should be noted that the directory structure matters.
+It should be noted, that the directory structure matters.
 
 ### system partition overlay
 
-To overlay a file over the system partition, `droid-system-overlay` directory can be used
+To overlay a file over the system partition, the `droid-system-overlay` directory can be used:
 
 	(device)# mkdir -p /usr/lib/droid-system-overlay
 
-and the your files can be added here. take [this](https://github.com/droidian-devices/adaptation-fxtec-pro1x/tree/droidian/sparse/usr/lib/droid-system-overlay) as a reference.
+Your files can be added here. Use [this](https://github.com/droidian-devices/adaptation-fxtec-pro1x/tree/droidian/sparse/usr/lib/droid-system-overlay) as a reference.
 
-It should be noted that the directory structure matters.
+It should be noted, that the directory structure matters.
 
 ### Bluetooth crashing
 
-Bluetooth might crash because of missing MAC Address. To make the bluetooth service ignore it this hack can be used
+Bluetooth might crash because of a missing MAC Address. To make the bluetooth service ignore it, this hack can be used:
 
 	(device)# mkdir -p /var/lib/bluetooth/
 	(device)# touch /var/lib/bluetooth/board-address
 
 For a proper solution, a `droid-get-bt-address.sh` script which fetches the correct address should be created.
 
-An example of this solution can be found at [here](https://github.com/droidian-devices/adaptation-google-sargo/blob/droidian/usr/bin/droid/droid-get-bt-address.sh) or [here](https://github.com/droidian-devices/adaptation-droidian-oneplus3/blob/droidian/usr/bin/droid/droid-get-bt-address.sh) for Qualcomm's
-and [here](https://github.com/droidian-devices/adaptation-droidian-angelica/blob/droidian/usr/bin/droid/droid-get-bt-address.sh) for MediaTek's.
+An example of this solution can be found [here](https://github.com/droidian-devices/adaptation-google-sargo/blob/droidian/usr/bin/droid/droid-get-bt-address.sh) or [here](https://github.com/droidian-devices/adaptation-droidian-oneplus3/blob/droidian/usr/bin/droid/droid-get-bt-address.sh) for Qualcomms
+and [here](https://github.com/droidian-devices/adaptation-droidian-angelica/blob/droidian/usr/bin/droid/droid-get-bt-address.sh) for MediaTeks.
 
-### Bluetooth not available in settings
+### Bluetooth not available in the Settings app
 
 Bluetooth might fail to appear in `gnome-control-center` for various reasons.
 
-It can be tested with `bluetoothctl` or `blueman`
+It can be tested with `bluetoothctl` or `blueman`:
 
 	(device)$ bluetoothctl
 	[bluetooth]# scan on
 
-or to install blueman
+To test with blueman, install it using apt:
 
 	(device)# apt install blueman
 
-A new package called btscanner-gcc is also available in case settings does show the bluetooth section but no devices under that section
+A new package called `btscanner-gcc` is also available in case settings does show the bluetooth section but no devices under that section:
 
 	(device)# apt install btscanner-gcc
 
-Now bluetooth should be available after a reboot
+Now bluetooth should be available after a reboot.
 
 ### Audio adjusting not working
 
-on MediaTek devices, pulseaudio requires a custom configuration file which can be found [here](https://github.com/droidian-devices/adaptation-droidian-angelica/blob/droidian/etc/pulse/arm_droid_card_custom.pa).
+On MediaTek devices, pulseaudio requires a custom configuration file which can be found [here](https://github.com/droidian-devices/adaptation-droidian-angelica/blob/droidian/etc/pulse/arm_droid_card_custom.pa).
 
 ### Custom hostname
 
-To set a custom hostname on boot, a preferred hostname file can be created
+To set a custom hostname on boot, a preferred hostname file can be created:
 
 	(device)# mkdir -p /usr/lib/droidian/device/
 	(device)# nano preferred-hostname
 
-And put your device model or codename without any spaces.
+And put in your device's model or codename without any spaces.
 
 ### Cursor on the screen
 
-Some devices have an some HID interfaces which are not used by Droidian. These interfaces might get registered as things such as keyboard or mouse.
+Some devices have some HID interfaces which are not used by Droidian. These interfaces might get registered as things such as a keyboard or mouse.
 
-As a result you might see a cursor on the screen for no obvious reason.
+As a result, you might see a cursor on the screen for no obvious reason.
 
-To find information about the input device, `libinput-tools` can be installed and used
+To find information about the input device, `libinput-tools` can be installed and used:
 
 	(device)# apt install libinput-tools
 
-To get a list of all devices
+To get a list of all devices:
 
 	(device)# libinput list-devices
 
-To monitor inputs
+To monitor inputs:
 
 	(device)# libinput debug-events
 
-To hide this event node a udev rule can be added
+To hide an event node, a udev rule can be created. Add a line like this:
 
 `ACTION=="add|change", KERNEL=="event1", OWNER="root", GROUP="system", MODE="0666", ENV{LIBINPUT_IGNORE_DEVICE}="1"`
 
@@ -465,34 +470,35 @@ Make sure to adapt the event node in this line from `event1` to your input devic
 
 ### Encryption support
 
-To test out encryption first create an empty file in `/usr/lib/droidian/device/encryption-supported` then open the encryption app.
-
+To test out encryption, first create an empty file in `/usr/lib/droidian/device/encryption-supported`:
 
 	(device)# mkdir -p /usr/lib/droidian/device/
 	(device)# touch /usr/lib/droidian/device/encryption-supported
 
+Then open the encryption app or navigate to the Encryption menu in the Settings app and turn on encryption.
+After the initial setup is done, you will be instructed to reboot to complete the setup.
 
-If after enabling encryption device can be unlocked without any issues then keep the file. else remove it
+If the device can be unlocked without any issues after enabling encryption, then keep the file. Otherwise remove it.
 
 ### Camera support
 
 In case of camera not functioning on the target device, it would be a good idea to check if [this commit](https://github.com/droidian-devices/linux-android-xiaomi-lavender/commit/a6218388caa8716fff413dc6c9d88b73be426362) is present in your kernel.
 
-It is known to break camera on devices. if it is present, it should be reverted in the kernel.
+It is known to break camera on devices. If it is present, it should be reverted in the kernel.
 
-Both of Droidian's camera stacks should be tested. one uses droidcamsrc available as pinhole and the other is aal available as droidian-camera.
+Both of Droidian's camera stacks should be tested. One uses droidcamsrc available as pinhole and the other is aal available as droidian-camera.
 
 To install and use pinhole (which uses droidcamsrc):
 
 	(device)# apt install pinhole -y
 
-to install droidian-camera:
+To install droidian-camera:
 
 	(device)# apt install droidian-camera -y
 
 ### Waydroid cgroups error
 
-On some devices, waydroid will fail to start due to some cgroups issues. `systemd.unified_cgroup_hierarchy=0` can be added to kernel cmdline to work around this issue.
+On some devices, Waydroid will fail to start due to some cgroups issues. `systemd.unified_cgroup_hierarchy=0` can be added to the kernel cmdline to work around this issue.
 
 ### Force flashlight to use sysfs
 
@@ -500,9 +506,11 @@ To force the flashlight daemon to use sysfs, an empty file with the name `/usr/l
 
 ### Add sysfs flashlight node
 
-To add a sysfs flashlight nodes, a comma separated file at `/usr/lib/droidian/device/flashlightd-sysfs-nodes`
+To add a sysfs flashlight nodes, a file should be created at `/usr/lib/droidian/device/flashlightd-sysfs-nodes`.
 
-The syntax looks like the following
+Add a comma separated list of paths there.
+
+The syntax looks like the following:
 
 ```
 /path/to/node,/path/to/node2
@@ -512,25 +520,25 @@ The syntax looks like the following
 
 On some Qualcomm devices (such as lavender and sargo), Android thermal engine service will slow down the system and keep cpu cores offline.
 
-This service can be disabled via a vendor overlay of android init files to disable the service. [These few lines](https://github.com/droidian-devices/adaptation-droidian-lavender/blob/droidian/usr/lib/droid-vendor-overlay/etc/init/init.target.rc#L226-229) can be taken as reference.
+This service can be disabled via a vendor overlay of Android init files to disable the service. [These few lines](https://github.com/droidian-devices/adaptation-droidian-lavender/blob/droidian/usr/lib/droid-vendor-overlay/etc/init/init.target.rc#L226-229) can be used as a reference.
 
 ### Noise during calls
 
-In case of voice calls being noisey, the value of `persist.audio.fluence.voicecall` can be adjusted using setprop. acceptable values are `true` and `false`
+In case of voice calls being noisy, the value of `persist.audio.fluence.voicecall` can be adjusted using `setprop`. Acceptable values are `true` and `false`:
 
 	(device)# setprop persist.audio.fluence.voicecall false
 
 ### Battery and suspend
 
-Traditional suspend is broken on Android kernels, as a result Droidian uses batman to allow for battery management which is enabled by default.
+Traditional suspend is broken on Android kernels. As a result, Droidian uses batman to allow for battery management and is enabled by default.
 
-Traditional suspend wakes up the device every now and then without actually suspending. this behaviour can be disabled with [this](https://github.com/droidian-devices/adaptation-droidian-starqlte/blob/droidian/usr/share/glib-2.0/schemas/10_disable-suspend.gschema.override) schema override file.
+Traditional suspend wakes up the device every now and then without actually suspending. This behaviour can be disabled with [this](https://github.com/droidian-devices/adaptation-droidian-starqlte/blob/droidian/usr/share/glib-2.0/schemas/10_disable-suspend.gschema.override) schema override file.
 
 Disabling it won't do any harm to the system as batman is the main daemon in charge of battery management on Droidian.
 
 ### MTP
 
-MTP support is available since trixie and can be enabled with
+MTP support is available since trixie and can be enabled with:
 
 	(device)# touch /usr/lib/droidian/device/mtp-supported
 
@@ -538,7 +546,7 @@ Now MTP can be enabled from settings after a reboot.
 
 ### Cutout and punch hole fixes
 
-Droidian will attempt to automatically generate config files on startup to fix issues of cutout and punch holes
+Droidian will attempt to automatically generate config files on startup to fix issues of cutout and punch holes.
 
 In case the info is not generated or not usable for any reason, a custom version can be added at `/usr/lib/droidian/device/phosh-notch/halium.json`.
 

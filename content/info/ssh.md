@@ -12,8 +12,8 @@ You can ssh in using rndis over a cable:
 
 # WiFi
 
-You can also connect over WiFi
+You can also connect over WiFi:
 
 	ssh droidian@192.168.1.28
 
-replace 192.168.1.28 with phones ip address
+Replace 192.168.1.28 with phones ip address

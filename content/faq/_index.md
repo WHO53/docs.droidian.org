@@ -31,13 +31,13 @@ draft: false
 
 <div class="white-text">
     <h3>Which device is the best to give Droidian a try?</h3>
-    <p>Havea look at the list of <a href="https://devices.droidian.org/devices/">officially supported devices</a>. these devices perform the best amongst all other and they are maintained by Droidian's core dev team</p>
+    <p>Have a look at the list of <a href="https://devices.droidian.org/devices/">officially supported devices</a>. These devices perform the best amongst all others and they are maintained by Droidian's core development team.</p>
 </div>
 <br><br>
 
 <div class="white-text">
     <h3>Can I run Droidian on my phone?</h3>
-    <p>The list of devices that can run Droidian and the instruction to install them can be found at <a href="https://devices.droidian.org/">devices.droidian.org</a>.</p>
+    <p>The list of devices that can run Droidian and the instruction to install it on them can be found at <a href="https://devices.droidian.org/">devices.droidian.org</a>.</p>
 </div>
 <br><br>
 
@@ -48,8 +48,8 @@ draft: false
 <br><br>
 
 <div class="white-text">
-    <h3>Can an Ubuntu touch device run Droidian?</h3>
-    <p>Droidian based on Debian and utilizes Halium to interact with Android devices. Since Ubuntu touch also utilizes Halium, if a device has been ported to Ubuntu Touch using Halium 9, 10, or 11, it is likely that it can run Droidian without major changes to the kernel provided by UBports.</p>
+    <h3>Can an Ubuntu Touch device run Droidian?</h3>
+    <p>Droidian is based on Debian and utilizes Halium to interact with Android devices. Since Ubuntu Touch also utilizes Halium, if a device has been ported to Ubuntu Touch using Halium 9 or later, it can likely run Droidian without major changes to the kernel provided by UBports.</p>
 </div>
 <br><br>
 
@@ -61,13 +61,13 @@ draft: false
 
 <div class="white-text">
     <h3>Can I run Android applications in Droidian?</h3>
-    <p>Yes, Waydroid can provide a pretty much complete Android experience. You can read more about Waydroid <a href="https://docs.droidian.org/info/android-apps/">here</a></p>
+    <p>Yes, Waydroid can provide an essentially complete Android experience. You can read more about Waydroid <a href="https://docs.droidian.org/info/android-apps/">here</a>.</p>
 </div>
 <br><br>
 
 <div class="white-text">
     <h3>Can I run Flatpak applications on Droidian?</h3>
-    <p>Yes. Flatpaks are available from the software store</p>
+    <p>Yes. Flatpaks are available from the software store.</p>
 </div>
 <br><br>
 
@@ -90,8 +90,8 @@ draft: false
 <br><br>
 
 <div class="white-text">
-    <h3>How to change password/PIN?</h3>
-    <p>Password can be changed in the settings app the minimum number of characters being 6.</p>
+    <h3>How to change the password/PIN?</h3>
+    <p>The password can be changed in the settings app, with the minimum number of characters being 6.</p>
 </div>
 <br><br>
 

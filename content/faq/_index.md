@@ -19,7 +19,7 @@ draft: false
 
 <div class="white-text">
     <h3>What is Droidian?</h3>
-    <p>Droidian is a Debian-based distribution for mobile devices. The goal of Droidian is to be able to run Debian on Android phones.This is accomplished by using well-known technologies such as libhybris and <a href="https://halium.org/">Halium</a>.</p>
+    <p>Droidian is a Debian-based distribution for mobile devices. The goal of Droidian is to be able to run Debian on Android phones. This is accomplished by using well-known technologies such as libhybris and <a href="https://halium.org/">Halium</a>.</p>
 </div>
 <br><br>
 

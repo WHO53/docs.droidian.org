@@ -1,0 +1,42 @@
+name: Deploy to Gitbub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: npm i
+
+    - name: Build
+      run: |
+        npm run build
+        touch out/.nojekyll
+
+    - name: Upload build dir
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        path: ./out
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

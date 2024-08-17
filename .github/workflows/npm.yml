@@ -1,0 +1,34 @@
+name: Update NPM Dependencies
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install npm-check-updates
+      run: npm install -g npm-check-updates
+
+    - name: Update dependencies
+      run: ncu -u && npm install
+
+    - name: Commit changes
+      run: |
+        git config --local user.name "github-actions[bot]"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git add package.json
+        if ! git diff --cached --quiet; then
+          git commit -m "Update npm dependencies"
+        else
+          echo "No changes to commit"
+        fi
+    
+    - name: Push changes
+      run: git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

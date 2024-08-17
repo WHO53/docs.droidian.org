@@ -1,0 +1,23 @@
+{
+  "name": "docs-droidian-org",
+  "version": "0.0.1",
+  "description": "Droidian Docs",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Deepak Kumar <notwho53@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^14.2.8",
+    "nextra": "latest",
+    "nextra-theme-docs": "latest",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.5.4",
+    "typescript": "^5.5.4"
+  }
+}

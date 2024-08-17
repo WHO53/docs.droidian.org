@@ -1,23 +1,20 @@
 The repository cans sourcecode for [Droidian Documentation page](https://docs.droidian.org/)
 
-The site has been built using hugo.
-The instructions to install hugo can be found [here](https://gohugo.io/getting-started/installing)
+The site has been built using Next.js.
 
-# Running the hugo server for development
-The hugo server can be started locally using the command:
+# Running locally for development
 
-    $ hugo serve -D
+The website can be started locally using the command:
 
-> -D flag is provided used to allow draft pages to be included.
+    $ npm run dev
 
-The site is up at [http://localhost:1313](http://localhost:1313) by default
+## Adding new doc page
 
-## Adding new blog page
-A new porting doc page can be added using the CLI using following command :
+A new doc page can be added by creating page-name.md file in pages/ dir.
 
-    $ hugo new porting-guide/<name of the doc>.md
+For adding the same page in sidebar, make changed to _meta.json
 
-example:
+For adding a category of docs , create the category-name dir in pages/ dir and populate it with .md
+If you want to have an index page for category too then add category.md in pages/ dir.
 
-    $ hugo new porting-guide/kernel-compilation.md
-
+For more information you can checkout theme [docs](https://nextra.site/docs/docs-theme)

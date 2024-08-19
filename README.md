@@ -1,20 +1,25 @@
-The repository cans sourcecode for [Droidian Documentation page](https://docs.droidian.org/)
+# Starlight Docs
 
-The site has been built using Next.js.
+[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-# Running locally for development
+This directory contains the Starlight documentation website (built with Starlight!)
 
-The website can be started locally using the command:
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/docs)
+[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/docs)
 
-    $ npm run dev
+## 🧞 Commands
 
-## Adding new doc page
+All commands are run from the root of the project, from a terminal:
 
-A new doc page can be added by creating page-name.md file in pages/ dir.
+| Command                 | Action                                           |
+| :---------------------- | :----------------------------------------------- |
+| `pnpm install`          | Installs dependencies                            |
+| `pnpm run dev`          | Starts local dev server at `localhost:4321`      |
+| `pnpm run build`        | Build your production site to `./dist/`          |
+| `pnpm run preview`      | Preview your build locally, before deploying     |
+| `pnpm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
+| `pnpm run astro --help` | Get help using the Astro CLI                     |
 
-For adding the same page in sidebar, make changed to _meta.json
+## 👀 Want to learn more?
 
-For adding a category of docs , create the category-name dir in pages/ dir and populate it with .md
-If you want to have an index page for category too then add category.md in pages/ dir.
-
-For more information you can checkout theme [docs](https://nextra.site/docs/docs-theme)
+Feel free to check [the Astro documentation](https://docs.astro.build) or jump into the [Astro Discord server](https://astro.build/chat).

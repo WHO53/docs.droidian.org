@@ -6,41 +6,31 @@ const links = [];
 
 export default {
     lang: "en-US",
-    title: "Pirsch Documentation",
-    description: "Pirsch is a simple, privacy-friendly, and open-source web analytics solution — lightweight, cookie-free and easily integrated into any website or backend.",
+    title: "Droidian Documentation",
+    base: '/docs.droidian.org/',
+    description: "",
     cleanUrls: true,
     head: [
         ["meta", {name: "msapplication-TileColor", content: "#ffffff"}],
         ["meta", {name: "theme-color", content: "#000000"}],
         ["meta", {name: "twitter:card", content: "product"}],
-        ["meta", {name: "twitter:site", content: "@PirschAnalytics"}],
-        ["meta", {name: "twitter:title", content: "Pirsch Analytics Documentation"}],
-        ["meta", {name: "twitter:description", content: "Pirsch is a simple, privacy-friendly, and open-source web analytics solution."}],
-        ["meta", {name: "twitter:image", content: "https://docs.pirsch.io/twitter-card.png"}],
-        ["meta", {name: "og:url", content: "https://docs.pirsch.io"}],
-        ["meta", {name: "og:title", content: "Pirsch Analytics Documentation"}],
-        ["meta", {name: "og:description", content: "Pirsch is a simple, privacy-friendly, and open-source web analytics solution."}],
-        ["meta", {name: "og:image", content: "https://docs.pirsch.io/twitter-card.png"}],
+        ["meta", {name: "og:url", content: "https://docs.droidian.org"}],
+        ["meta", {name: "og:title", content: "Droidian Documentation"}],
+        ["meta", {name: "og:description", content: ""}],
         ["meta", {name: "og:type", content: "article"}],
         ["link", {rel: "shortcut icon", type: "image/png", href: "/favicon.png"}],
-        ["script", {defer: true, type: "text/javascript", src: "https://api.pirsch.io/pa.js", id: "pianjs", "data-code": "6V8bSjEHJ19PK2hVxaaqJhItHUpSUekW"}]
     ],
     themeConfig: {
         logo: "/logo.png",
-        algolia: {
-            appId: "VAP7DI3OBV",
-            apiKey: "20b32dacd2f4e3522a9c0848b54055ea",
-            indexName: "pirsch"
-        },
         nav: [
-            {text: "Website", link: "https://pirsch.io"},
-            {text: "GitHub", link: "https://github.com/pirsch-analytics/docs"}
+            {text: "Website", link: "https://droidian.org1"},
+            {text: "GitHub", link: "https://github.com/droidian/droidian"}
         ],
         sidebar: [
             {
                 text: "Getting Started",
                 items: [
-                    {text: "Website Integration", link: "/get-started/frontend-integration"},
+                    {text: "Porting Guide", link: "/porting-guide"},
                     {text: "Server-Side Integration", link: "/get-started/backend-integration"},
                     {text: "Client Hints", link: "/get-started/client-hints"},
                     {text: "Google Analytics Import", link: "/get-started/ga-import"},
@@ -128,7 +118,7 @@ export default {
     },
     buildEnd: async ({ outDir }) => {
         const sitemap = new SitemapStream({
-            hostname: "https://docs.pirsch.io/"
+            hostname: "https://docs.droidian.org/"
         })
         const writeStream = createWriteStream(resolve(outDir, "sitemap.xml"));
         sitemap.pipe(writeStream);

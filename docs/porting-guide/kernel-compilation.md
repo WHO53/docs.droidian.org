@@ -28,7 +28,7 @@ If your device has shipped with Android 8.1 or 9, it probably is GSI (Generic Sy
 This will reduce the amount of work the porter has to do by a significant amount.
 
 If your device doesn't support GSIs, you'll also need to compile a patched system image.
-The documentation for image creation can be found in [this guide](./image-creation.md)
+The documentation for image creation can be found in [this guide](./rootfs-creation.md)
 
 On Halium, the Android kernel is built via the standard Android toolchain.
 While this makes sense, on GSI-capable devices, this can be a waste of time, since often only kernel changes are required.
@@ -64,23 +64,30 @@ We're also assuming that you want the resulting packages in `~/droidian/packages
 
 Droidian tooling expects the kernel source to have a working git directory structure (has to be a kernel cloned from a git repository).
 
+```bash
 	(host)$ KERNEL_DIR="$HOME/droidian/kernel/vendor/device"
 	(host)$ PACKAGES_DIR="$HOME/droidian/packages"
 	(host)$ mkdir -p $PACKAGES_DIR
 	(host)$ cd $KERNEL_DIR
 	(host)$ git checkout -b droidian
+```
 
 Now it's time to fire up the Docker container.
 
-	(host)$ docker run --rm -v $PACKAGES_DIR:/buildd -v $KERNEL_DIR:/buildd/sources -it quay.io/droidian/build-essential:trixie-amd64 bash
+```bash
+	(host)$ docker run --rm -v $PACKAGES_DIR:/buildd -v $KERNEL_DIR:/buildd/sources -it quay.io/droidian/build-essential:current-amd64 bash
+```
 
 Inside the Docker container, install the `linux-packaging-snippets`, which
 provides the example `kernel-info.mk` file.
 
+```bash
 	(docker)# apt-get install linux-packaging-snippets
+```
 
 And create the skeleton packaging:
 
+```bash
 	(docker)# cd /buildd/sources
 	(docker)# mkdir -p debian/source
 	(docker)# cp -v /usr/share/linux-packaging-snippets/kernel-info.mk.example debian/kernel-info.mk
@@ -95,6 +102,7 @@ And create the skeleton packaging:
 		dh \$@
 	EOF
 	(docker)# chmod +x debian/rules
+```
 
 Now edit `debian/kernel-info.mk` to match your kernel settings.
 
@@ -109,11 +117,15 @@ Kernel info options
 
 unpackbootimg syntax goes as follows:
 
+```bash
 	(docker)# unpackbootimg --boot_img boot.img
+```
 
 or for the AOSP version of unpackbootimg:
 
+```bash
 	(docker)# unpackbootimg -i boot.img
+```
 
 ### kernel-info.mk entries
 
@@ -388,12 +400,16 @@ is to actually compile the kernel.
 
 First of all, (re)create the `debian/control` file:
 
+```bash
 	(docker)# rm -f debian/control
 	(docker)# debian/rules debian/control
+```
 
 Now that everything is in place, you can start a build with `releng-build-package`:
 
+```bash
 	(docker)# RELENG_HOST_ARCH="arm64" releng-build-package
+```
 
 The `RELENG_HOST_ARCH` variable is required when cross-building.
 

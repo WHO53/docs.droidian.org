@@ -29,7 +29,6 @@ jobs:
       - name: Install Node.js dependencies
         run: npm i
       - name: Build
-        env:
         run: |
           npm run docs:build
       - name: Upload artifact

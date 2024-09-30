@@ -1,9 +1,3 @@
----
-title: "Rootfs"
-date: 2023-12-26T14:44:09-0500
-draft: false
----
-
 # Resizing
 On new ports using the generic recovery flashable images, by default, the flash script will resize rootfs.img to 8GB.
 

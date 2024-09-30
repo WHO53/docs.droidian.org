@@ -30,7 +30,7 @@ The list of devices that can run Droidian and the instruction to install it on t
 
 ### My device is not listed at devices.droidian.org. What should I do now?
 
-You can follow the porting guide available [here](https://docs.droidian.org/porting-guide).
+You can follow the porting guide available [here](./porting-guide).
 
   
   
@@ -51,7 +51,7 @@ We rely on the Android Linux kernel and drivers to make all of the functionality
 
 ### Can I run Android applications in Droidian?
 
-Yes, Waydroid can provide an essentially complete Android experience. You can read more about Waydroid [here](https://docs.droidian.org/info/android-apps/).
+Yes, Waydroid can provide an essentially complete Android experience. You can read more about Waydroid [here](./info/android-apps/).
 
   
   
@@ -72,14 +72,14 @@ No.
 
 ### How to resize the rootfs?
 
-Resizing is only required for new ports. For instructions, refer to this [link](https://docs.droidian.org/info/rootfs/).
+Resizing is only required for new ports. For instructions, refer to this [link](./info/rootfs/).
 
   
   
 
 ### How to connect via SSH?
 
-For instructions, refer to this [link](https://docs.droidian.org/info/ssh/).
+For instructions, refer to this [link](./info/ssh/).
 
   
   

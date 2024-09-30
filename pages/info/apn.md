@@ -1,9 +1,3 @@
----
-title: "APN"
-date: 2023-12-26T14:44:09-0500
-draft: false
----
-
 # APN Misconfiguration
 
 In case your APN settings do not work from your provider, you can get the correct APN from ofono scripts

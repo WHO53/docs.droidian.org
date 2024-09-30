@@ -10,14 +10,14 @@
   "author": "Deepak Kumar <notwho53@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "next": "^14.2.8",
+    "next": "^14.2.13",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/node": "22.5.4",
-    "typescript": "^5.5.4"
+    "@types/node": "22.7.4",
+    "typescript": "^5.6.2"
   }
 }

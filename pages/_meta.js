@@ -1,4 +1,4 @@
-{
+export default {
   "index": "Introduction",
   "faq": "Frequently asked questions",
   "porting-guide": "Porting Guide",

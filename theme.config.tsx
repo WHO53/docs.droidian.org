@@ -30,13 +30,8 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: 'https://github.com/droidian-releng/docs.droidian.org',
   footer: {
-    text: 'Droidian Docs',
-  },
-  useNextSeoProps(){
-    return {
-      titleTemplate: '%s - Droidian Docs'
-    }
-  },
+    content: (<span> Droidian Docs </span>)
+  }
 }
 
 export default config

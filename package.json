@@ -8,7 +8,6 @@
     "start": "next start"
   },
   "author": "Deepak Kumar <notwho53@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "next": "^14.2.13",
     "nextra": "latest",

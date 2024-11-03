@@ -2,6 +2,12 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
+  head: (
+    <>
+        <meta property="og:title" content="Nextra" />
+        <meta property="og:description" content="The documentation of Droidian project" />
+    </>
+  ),
   logo: (
     <>
       <svg width="24" height="24" viewBox="0 0 24 24">
